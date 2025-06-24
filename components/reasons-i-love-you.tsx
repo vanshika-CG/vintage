@@ -6,13 +6,13 @@ import { Heart } from "lucide-react"
 
 const reasons = [
   "Your smile lights up my entire world",
-  "The way you laugh at my terrible jokes",
+  "You makes you feel safe, no matter what.",
   "How you make every ordinary day feel magical",
-  "Your kindness touches everyone around you",
+  "You knows how to calm me when I'm anxious.",
   "The way you hold me when I need comfort",
-  "How you believe in my dreams even when I don't",
+  "You treats me like a priority, not an option.",
   "Your beautiful soul that shines so bright",
-  "The way you make me want to be better",
+  "you are mine best friend, favorite person, and love of your life — all in one.",
 ]
 
 export default function ReasonsILoveYou() {
