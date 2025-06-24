@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect, useRef, Suspense } from "react"
 import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { Heart } from "lucide-react"
@@ -20,11 +20,6 @@ const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas
 const OrbitControls = dynamic(() => import("@react-three/drei").then(mod => mod.OrbitControls), { ssr: false })
 const Environment = dynamic(() => import("@react-three/drei").then(mod => mod.Environment), { ssr: false })
 
-// Zappar components
-const ZapparCanvas = dynamic(() => import("@zappar/zappar-react-three-fiber").then(mod => mod.Canvas), { ssr: false })
-const ZapparCamera = dynamic(() => import("@zappar/zappar-react-three-fiber").then(mod => mod.ZapparCamera), { ssr: false })
-const InstantTracker = dynamic(() => import("@zappar/zappar-react-three-fiber").then(mod => mod.InstantTracker), { ssr: false })
-
 // 3D Love Cube Component
 function LoveCube() {
   // Load textures for each face
@@ -38,152 +33,75 @@ function LoveCube() {
     textureLoader.load("/image6.jpg"), // Back face
   ]
 
-  // Configure textures (optional: adjust texture settings)
+  // Configure textures
   textures.forEach((texture) => {
     texture.minFilter = THREE.LinearFilter
     texture.magFilter = THREE.LinearFilter
     texture.encoding = THREE.sRGBEncoding
   })
 
+  // Add rotation animation using framer-motion's useAnimationFrame
+  const meshRef = useRef()
+  useEffect(() => {
+    const animate = (time) => {
+      if (meshRef.current) {
+        meshRef.current.rotation.x += 0.005
+        meshRef.current.rotation.y += 0.005
+      }
+      requestAnimationFrame(animate)
+    }
+    const id = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(id)
+  }, [])
+
   return (
-    <div className="h-[600px] w-full relative">
+    <div className="h-[700px] w-full relative overflow-hidden rounded-lg shadow-2xl">
       <Canvas>
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          <mesh>
-            <boxGeometry args={[2, 2, 2]} />
-            <meshStandardMaterial attach="material-0" map={textures[0]} roughness={0.4} metalness={0.2} />
-            <meshStandardMaterial attach="material-1" map={textures[1]} roughness={0.4} metalness={0.2} />
-            <meshStandardMaterial attach="material-2" map={textures[2]} roughness={0.4} metalness={0.2} />
-            <meshStandardMaterial attach="material-3" map={textures[3]} roughness={0.4} metalness={0.2} />
-            <meshStandardMaterial attach="material-4" map={textures[4]} roughness={0.4} metalness={0.2} />
-            <meshStandardMaterial attach="material-5" map={textures[5]} roughness={0.4} metalness={0.2} />
+          <ambientLight intensity={0.7} />
+          <pointLight position={[10, 10, 10]} intensity={1.5} />
+          <directionalLight position={[-5, 5, 5]} intensity={0.8} />
+          <mesh ref={meshRef}>
+            <boxGeometry args={[2.5, 2.5, 2.5]} /> {/* Increased cube size */}
+            <meshStandardMaterial attach="material-0" map={textures[0]} roughness={0.3} metalness={0.3} />
+            <meshStandardMaterial attach="material-1" map={textures[1]} roughness={0.3} metalness={0.3} />
+            <meshStandardMaterial attach="material-2" map={textures[2]} roughness={0.3} metalness={0.3} />
+            <meshStandardMaterial attach="material-3" map={textures[3]} roughness={0.3} metalness={0.3} />
+            <meshStandardMaterial attach="material-4" map={textures[4]} roughness={0.3} metalness={0.3} />
+            <meshStandardMaterial attach="material-5" map={textures[5]} roughness={0.3} metalness={0.3} />
           </mesh>
-          <OrbitControls enableZoom={false} />
+          <OrbitControls enableZoom={false} autoRotate={true} autoRotateSpeed={1.5} />
           <Environment preset="sunset" />
         </Suspense>
       </Canvas>
-      {/* Glowing effect */}
-      <div className="absolute inset-0 romantic-glow pointer-events-none" />
+      {/* Enhanced glowing effect */}
+      <div className="absolute inset-0 bg-gradient-radial from-pink-300/20 to-transparent pointer-events-none" />
       {/* Floating particles */}
-      {[...Array(10)].map((_, i) => (
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={`cube-particle-${i}`}
-          className="absolute w-4 h-4 text-blush-400 pointer-events-none"
+          className="absolute w-5 h-5 text-pink-400 pointer-events-none"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
           }}
           animate={{
-            scale: [0.5, 1, 0.5],
-            opacity: [0.2, 0.8, 0.2],
+            scale: [0.6, 1.2, 0.6],
+            opacity: [0.3, 0.9, 0.3],
             rotate: [0, 360],
+            x: Math.sin(i) * 20,
+            y: Math.cos(i) * 20,
           }}
           transition={{
-            duration: 4,
+            duration: 5,
             repeat: Number.POSITIVE_INFINITY,
-            delay: Math.random() * 2,
+            delay: Math.random() * 3,
+            ease: "easeInOut",
           }}
         >
           <Heart className="w-full h-full fill-current" />
         </motion.div>
       ))}
-    </div>
-  )
-}
-
-// Zappar-based AR Heart Filter Component
-function ARHeartFilter() {
-  const [arSupported, setArSupported] = useState(true)
-  const [arActive, setArActive] = useState(false)
-
-  useEffect(() => {
-    // Check for WebGL and webcam support
-    const canvas = document.createElement("canvas")
-    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl")
-    if (!gl || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      setArSupported(false)
-    }
-  }, [])
-
-  const startAR = () => {
-    setArActive(true)
-  }
-
-  return (
-    <div className="my-12 relative">
-      <div className="polaroid mx-auto max-w-[600px] p-8">
-        {arActive && arSupported ? (
-          <div className="relative">
-            <div id="ar-container" className="w-full h-[400px]">
-              <ZapparCanvas>
-                <ZapparCamera userCameraMirrorMode="css" />
-                <InstantTracker placement="floor">
-                  <mesh position={[0, 0.5, 0]}>
-                    <textGeometry args={["Happy Birthday Krish!", { font: "helvetiker", size: 0.2, height: 0.05 }]} />
-                    <meshStandardMaterial color="#f8b7cc" />
-                  </mesh>
-                  <mesh position={[0, -0.5, 0]} rotation={[0, 0, 0]}>
-                    <planeGeometry args={[0.5, 0.5]} />
-                    <meshStandardMaterial
-                      map={new THREE.TextureLoader().load("/heart.png")}
-                      transparent={true}
-                    />
-                    <animation
-                      property="rotation.y"
-                      to={Math.PI * 2}
-                      dur={4000}
-                      easing="linear"
-                      loop={true}
-                    />
-                  </mesh>
-                </InstantTracker>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} />
-              </ZapparCanvas>
-            </div>
-            {/* Romantic frame around AR feed */}
-            <div className="absolute inset-0 border-8 border-[#f8b7cc] rounded-lg shadow-lg pointer-events-none" />
-            <p className="text-burgundy-800 mt-4 text-sm">
-              Point your camera at a flat surface to see the AR effect!
-            </p>
-          </div>
-        ) : (
-          <div className="w-full h-[400px] bg-[#fff8e7] flex items-center justify-center relative">
-            {/* Fallback static heart animation */}
-            <motion.div
-              className="text-blush-400"
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 360],
-                opacity: [0.8, 1, 0.8],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Number.POSITIVE_INFINITY,
-              }}
-            >
-              <Heart className="w-32 h-32 fill-current" />
-            </motion.div>
-            <div className="absolute inset-0 border-8 border-[#f8b7cc] rounded-lg shadow-lg pointer-events-none" />
-          </div>
-        )}
-        <div className="text-center mt-4">
-          <button
-            className="luxury-button px-6 py-3 rounded-full"
-            onClick={startAR}
-            disabled={!arSupported || arActive}
-          >
-            {arSupported ? "Activate AR Hearts" : "AR Not Supported"}
-          </button>
-          {!arSupported && (
-            <p className="text-burgundy-800 mt-2 text-sm">
-              Your device doesn't support AR. Enjoy the static heart animation instead!
-            </p>
-          )}
-        </div>
-      </div>
     </div>
   )
 }
@@ -229,14 +147,9 @@ export default function RomanticBirthdayWebsite() {
       <main className="relative z-10">
         <HeroSection />
         {/* 3D Love Cube */}
-        <section className="py-12 luxury-gradient-primary text-center">
+        <section className="py-16 luxury-gradient-primary text-center">
           <h2 className="text-4xl font-cursive text-burgundy-800 mb-8">Our Love in 3D</h2>
           <LoveCube />
-        </section>
-        {/* AR Heart Filter */}
-        <section className="py-12 luxury-gradient-secondary text-center">
-          <h2 className="text-4xl font-cursive text-burgundy-800 mb-8">Augmented Love</h2>
-          <ARHeartFilter />
         </section>
         <LoveTimeline />
         <ReasonsILoveYou />

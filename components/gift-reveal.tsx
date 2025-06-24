@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function GiftReveal() {
-  const [isOpening, setIsOpening] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isOpening, setIsOpening] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const rect = document.getElementById('gift-container')?.getBoundingClientRect()
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = document.getElementById("gift-container")?.getBoundingClientRect();
       if (rect) {
         setMousePosition({
           x: (e.clientX - rect.left - rect.width / 2) / 20,
-          y: (e.clientY - rect.top - rect.height / 2) / 20
-        })
+          y: (e.clientY - rect.top - rect.height / 2) / 20,
+        });
       }
-    }
+    };
 
-    document.addEventListener('mousemove', handleMouseMove)
-    return () => document.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const handleGiftClick = () => {
     if (!isOpening && !isOpen) {
-      setIsOpening(true)
+      setIsOpening(true);
       setTimeout(() => {
-        setIsOpen(true)
-        setIsOpening(false)
-      }, 2000)
+        setIsOpen(true);
+        setIsOpening(false);
+      }, 2000);
     }
-  }
+  };
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 min-h-screen">
@@ -46,9 +46,9 @@ export default function GiftReveal() {
           A Gift Just For You
         </motion.h2>
 
-        <div 
+        <div
           id="gift-container"
-          className="relative flex justify-center items-center" 
+          className="relative flex justify-center items-center"
           style={{ height: "500px", perspective: "1000px" }}
         >
           {/* Ambient romantic particles */}
@@ -96,12 +96,12 @@ export default function GiftReveal() {
             }
             transition={{
               rotateY: isOpening ? { duration: 2, ease: "easeInOut" } : { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              scale: { duration: 0.5, repeat: isOpening ? 4 : 0 }
+              scale: { duration: 0.5, repeat: isOpening ? 4 : 0 },
             }}
             whileHover={{ scale: 1.05 }}
           >
             {/* 3D Gift Box */}
-            <div 
+            <div
               className="relative w-72 h-72"
               style={{ transformStyle: "preserve-3d" }}
             >
@@ -114,7 +114,7 @@ export default function GiftReveal() {
                   backgroundImage: `
                     radial-gradient(circle at 25% 25%, rgba(255,255,255,0.3) 0%, transparent 50%),
                     linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)
-                  `
+                  `,
                 }}
                 animate={isOpening ? { opacity: 0.7 } : {}}
               />
@@ -149,11 +149,15 @@ export default function GiftReveal() {
                 style={{
                   transform: "rotateX(90deg) translateZ(136px)",
                 }}
-                animate={isOpen ? { 
-                  rotateX: -180,
-                  translateZ: 200,
-                  transition: { duration: 1.5, ease: "easeOut" }
-                } : {}}
+                animate={
+                  isOpen
+                    ? {
+                        rotateX: -180,
+                        translateZ: 200,
+                        transition: { duration: 1.5, ease: "easeOut" },
+                      }
+                    : {}
+                }
               />
 
               {/* Bottom face */}
@@ -165,7 +169,7 @@ export default function GiftReveal() {
               />
 
               {/* Golden Ribbon - Horizontal */}
-              <motion.div
+одня              <motion.div
                 className="absolute top-1/2 left-0 right-0 h-12 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 transform -translate-y-1/2 shadow-lg z-10"
                 style={{
                   backgroundImage: `
@@ -173,18 +177,18 @@ export default function GiftReveal() {
                     linear-gradient(0deg, rgba(0,0,0,0.1) 0%, transparent 50%, rgba(255,255,255,0.2) 100%)
                   `,
                   borderTop: "2px solid rgba(255,255,255,0.3)",
-                  borderBottom: "2px solid rgba(0,0,0,0.2)"
+                  borderBottom: "2px solid rgba(0,0,0,0.2)",
                 }}
                 animate={
-                  isOpening 
-                    ? { 
-                        scaleY: [1, 1.3, 1], 
+                  isOpening
+                    ? {
+                        scaleY: [1, 1.3, 1],
                         boxShadow: [
                           "0 0 20px rgba(255,215,0,0.5)",
                           "0 0 40px rgba(255,215,0,0.8)",
-                          "0 0 20px rgba(255,215,0,0.5)"
-                        ]
-                      } 
+                          "0 0 20px rgba(255,215,0,0.5)",
+                        ],
+                      }
                     : {}
                 }
                 transition={{ duration: 0.4, repeat: isOpening ? 5 : 0 }}
@@ -199,18 +203,18 @@ export default function GiftReveal() {
                     linear-gradient(90deg, rgba(0,0,0,0.1) 0%, transparent 50%, rgba(255,255,255,0.2) 100%)
                   `,
                   borderLeft: "2px solid rgba(255,255,255,0.3)",
-                  borderRight: "2px solid rgba(0,0,0,0.2)"
+                  borderRight: "2px solid rgba(0,0,0,0.2)",
                 }}
                 animate={
-                  isOpening 
-                    ? { 
+                  isOpening
+                    ? {
                         scaleX: [1, 1.3, 1],
                         boxShadow: [
                           "0 0 20px rgba(255,215,0,0.5)",
                           "0 0 40px rgba(255,215,0,0.8)",
-                          "0 0 20px rgba(255,215,0,0.5)"
-                        ]
-                      } 
+                          "0 0 20px rgba(255,215,0,0.5)",
+                        ],
+                      }
                     : {}
                 }
                 transition={{ duration: 0.4, repeat: isOpening ? 5 : 0 }}
@@ -233,10 +237,10 @@ export default function GiftReveal() {
                             rotateY: [0, 15, -15, 0],
                           }
                     }
-                    transition={{ 
-                      duration: isOpening ? 1.5 : 3, 
+                    transition={{
+                      duration: isOpening ? 1.5 : 3,
                       repeat: isOpening ? 1 : Infinity,
-                      ease: "easeInOut"
+                      ease: "easeInOut",
                     }}
                     exit={{
                       scale: 0,
@@ -252,11 +256,11 @@ export default function GiftReveal() {
                         transform: "rotateY(-20deg) rotateZ(-15deg) translateX(-8px)",
                         backgroundImage: `
                           radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.5) 0%, transparent 70%),
-                          linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)
-                        `
+                          linear-gradient(45deg, transparent 2%, rgba(255,255,255,0.2) 50%, transparent 70%)
+                        `,
                       }}
                     />
-                    
+
                     {/* Right bow loop */}
                     <motion.div
                       className="absolute w-16 h-12 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-500 rounded-full shadow-xl"
@@ -265,10 +269,10 @@ export default function GiftReveal() {
                         backgroundImage: `
                           radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.5) 0%, transparent 70%),
                           linear-gradient(-45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)
-                        `
+                        `,
                       }}
                     />
-                    
+
                     {/* Bow center knot */}
                     <motion.div
                       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-8 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-lg shadow-lg z-10"
@@ -276,7 +280,7 @@ export default function GiftReveal() {
                         backgroundImage: `
                           radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.4) 0%, transparent 70%),
                           linear-gradient(0deg, rgba(0,0,0,0.1) 0%, transparent 50%, rgba(255,255,255,0.2) 100%)
-                        `
+                        `,
                       }}
                     />
 
@@ -284,9 +288,11 @@ export default function GiftReveal() {
                     <motion.div
                       className="absolute top-8 left-1/2 transform -translate-x-1/2"
                       animate={
-                        isOpening ? {} : {
-                          rotateZ: [0, 2, -2, 0],
-                        }
+                        isOpening
+                          ? {}
+                          : {
+                              rotateZ: [0, 2, -2, 0],
+                            }
                       }
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
@@ -321,7 +327,7 @@ export default function GiftReveal() {
                           duration: 2.5,
                           delay: Math.random() * 1,
                           repeat: 1,
-                          ease: "easeOut"
+                          ease: "easeOut",
                         }}
                       >
                         <div className="w-3 h-3 bg-gradient-to-br from-yellow-300 to-yellow-500 rotate-45 shadow-lg"></div>
@@ -347,7 +353,7 @@ export default function GiftReveal() {
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
 
@@ -355,14 +361,14 @@ export default function GiftReveal() {
             {!isOpening && !isOpen && (
               <motion.p
                 className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-pink-300 font-bold text-xl whitespace-nowrap"
-                animate={{ 
+                animate={{
                   opacity: [0.6, 1, 0.6],
                   y: [0, -5, 0],
                   textShadow: [
                     "0 0 10px rgba(255,182,193,0.5)",
                     "0 0 20px rgba(255,182,193,0.8)",
-                    "0 0 10px rgba(255,182,193,0.5)"
-                  ]
+                    "0 0 10px rgba(255,182,193,0.5)",
+                  ],
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -386,35 +392,33 @@ export default function GiftReveal() {
                     className="bg-gradient-to-br from-rose-100 to-pink-50 p-6 pb-20 shadow-2xl border-4 border-rose-200"
                     style={{
                       transform: "rotate(2deg)",
-                      filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.3))"
+                      filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.3))",
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       rotate: 0,
                       scale: 1.05,
-                      transition: { duration: 0.3 }
+                      transition: { duration: 0.3 },
                     }}
                   >
-                    <div className="w-80 h-60 bg-gray-200 relative overflow-hidden border-2 border-rose-100">
-                      {/* Photo placeholder */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-50 to-rose-50">
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">📸</div>
-                          <p className="text-gray-600 text-lg font-medium">Your special photo goes here!</p>
-                          <p className="text-gray-500 text-sm mt-2">Upload your favorite memory</p>
-                        </div>
-                      </div>
+                    <div className="w-80 h-60 relative overflow-hidden border-2 border-rose-100">
+                      {/* Actual image */}
+                      <img
+                        src="/me.jpg"
+                        alt="Special memory"
+                        className="w-full h-full object-contain absolute top-0 left-0"
+                      />
                     </div>
 
                     {/* Romantic caption */}
                     <div className="absolute bottom-6 left-6 right-6 text-center">
-                      <motion.p 
+                      <motion.p
                         className="text-rose-600 font-bold text-xl"
                         animate={{
                           color: ["#e11d48", "#f43f5e", "#e11d48"],
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
-                        Forever in my heart ❤️
+                        I'm Your Gift !😂❤️
                       </motion.p>
                     </div>
                   </motion.div>
@@ -440,10 +444,10 @@ export default function GiftReveal() {
                         delay: i * 0.4,
                         repeat: Infinity,
                         repeatDelay: 3,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       }}
                     >
-                      {['❤️', '💕', '💖', '💝', '🌹'][Math.floor(Math.random() * 5)]}
+                      {["❤️", "💕", "💖", "💝", "🌹"][Math.floor(Math.random() * 5)]}
                     </motion.div>
                   ))}
                 </div>
@@ -453,5 +457,5 @@ export default function GiftReveal() {
         </div>
       </div>
     </section>
-  )
+  );
 }
