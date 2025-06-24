@@ -1,0 +1,491 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  .interactive {
+    cursor: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff8e7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a0e2f, #f8b7cc);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6b1a44, #f7cac9);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
+/* Custom selection colors */
+::selection {
+  background-color: #f8b7cc;
+  color: #4a0e2f;
+}
+
+::-moz-selection {
+  background-color: #f8b7cc;
+  color: #4a0e2f;
+}
+
+/* Enhanced romantic effects with luxury palette */
+.romantic-glow {
+  animation: romantic-pulse 3s infinite alternate;
+  filter: drop-shadow(0 0 15px rgba(248, 183, 204, 0.8));
+}
+
+@keyframes romantic-pulse {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(248, 183, 204, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 20px rgba(212, 160, 23, 0.8));
+  }
+}
+
+.luxury-heartbeat {
+  animation: luxury-heartbeat 0.8s ease infinite;
+}
+
+@keyframes luxury-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 8px rgba(248, 183, 204, 0.6);
+  }
+  15% {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(212, 160, 23, 0.8);
+  }
+  30% {
+    transform: scale(1);
+    text-shadow: 0 0 8px rgba(248, 183, 204, 0.6);
+  }
+  45% {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(212, 160, 23, 0.8);
+  }
+}
+
+.floating-luxury {
+  animation: floating-luxury 4s ease-in-out infinite;
+}
+
+@keyframes floating-luxury {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+}
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid #d4a017;
+  white-space: nowrap;
+  animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #d4a017;
+  }
+}
+
+/* Flicker animation for candle flames */
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1) rotate(-1deg);
+    filter: drop-shadow(0 0 8px #d4a017);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.05) rotate(1deg);
+    filter: drop-shadow(0 0 12px #ffd700);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(0.98) rotate(0deg);
+    filter: drop-shadow(0 0 6px #d4a017);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.02) rotate(-0.5deg);
+    filter: drop-shadow(0 0 10px #ffd700);
+  }
+}
+
+/* Heart burst animation */
+@keyframes heartBurst {
+  0% {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) translateY(-50px);
+  }
+}
+
+/* Heart float animation */
+@keyframes heartFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-80px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.3);
+  }
+}
+
+/* Sparkle animation */
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* Twinkle stars */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Drift animation for petals */
+@keyframes drift {
+  0% {
+    transform: translateY(-10px) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(5px) translateX(10px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(20px) translateX(-5px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(35px) translateX(15px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(50px) translateX(0) rotate(360deg);
+  }
+}
+
+/* Slide in animation */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Heart pop animation */
+@keyframes heartPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3D card flip styles */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Enhanced 3D perspective */
+.flip-card-container {
+  perspective: 1000px;
+}
+
+/* Luxury gradient backgrounds */
+.luxury-gradient-primary {
+  background: linear-gradient(135deg, #f8b7cc, #fff8e7);
+}
+
+.luxury-gradient-secondary {
+  background: linear-gradient(135deg, #d8bfd8, #fff8e7);
+}
+
+.luxury-gradient-accent {
+  background: linear-gradient(135deg, #4a0e2f, #6b1a44);
+}
+
+/* Velvet texture effect */
+.velvet-texture {
+  background: linear-gradient(135deg, #4a0e2f, #6b1a44);
+  position: relative;
+}
+
+.velvet-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(212, 160, 23, 0.1), transparent 50%);
+  pointer-events: none;
+}
+
+/* Parchment effect */
+.parchment {
+  background: #fff8e7;
+  background-image: radial-gradient(circle at 20% 80%, rgba(248, 183, 204, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(216, 191, 216, 0.1) 0%, transparent 50%);
+}
+
+/* Gold embossing effect */
+.gold-emboss {
+  color: #d4a017;
+  text-shadow: 1px 1px 0 #ffd700, -1px -1px 0 #b8860b, 1px -1px 0 #b8860b, -1px 1px 0 #b8860b;
+}
+
+/* Polaroid frame */
+.polaroid {
+  background: #fff8e7;
+  border: 5px solid #fff8e7;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(74, 14, 47, 0.1);
+  transform: rotate(2deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.polaroid:hover {
+  transform: rotate(0deg);
+  box-shadow: 0 8px 20px rgba(248, 183, 204, 0.4), inset 0 0 0 1px rgba(74, 14, 47, 0.2);
+}
+
+/* Luxury button styles */
+.luxury-button {
+  background: linear-gradient(135deg, #f8b7cc, #f7cac9);
+  border: 2px solid #d4a017;
+  color: #4a0e2f;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #d4a017, #ffd700);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.luxury-button:hover::before {
+  opacity: 0.2;
+}
+
+.luxury-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(212, 160, 23, 0.4);
+}
+
+/* Heart-shaped elements */
+.heart-shape {
+  position: relative;
+  width: 20px;
+  height: 18px;
+  transform: rotate(-45deg);
+}
+
+.heart-shape::before,
+.heart-shape::after {
+  content: "";
+  width: 12px;
+  height: 18px;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  background: currentColor;
+  border-radius: 10px 10px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.heart-shape::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+/* Fireworks styles */
+.firework {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: firework-explosion 2s ease-out forwards;
+}
+
+@keyframes firework-explosion {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3) translateY(-100px);
+  }
+}
+
+/* Luxury focus states for accessibility */
+.luxury-focus:focus {
+  outline: 3px solid #d4a017;
+  outline-offset: 2px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .luxury-heartbeat {
+    animation-duration: 1s;
+  }
+
+  .floating-luxury {
+    animation-duration: 5s;
+  }
+
+  .romantic-glow {
+    filter: drop-shadow(0 0 8px rgba(248, 183, 204, 0.6));
+  }
+
+  .typewriter {
+    animation-duration: 4s;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .luxury-heartbeat,
+  .floating-luxury,
+  .romantic-glow,
+  .typewriter {
+    animation: none;
+  }
+
+  .luxury-button:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-closed { width: 300px; height: 400px; }
+  .book-open { width: 600px; height: 400px; }
+}
+
+.book-open::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 10px solid transparent;
+  border-image: url('/lace-border.png') 30 stretch;
+}
